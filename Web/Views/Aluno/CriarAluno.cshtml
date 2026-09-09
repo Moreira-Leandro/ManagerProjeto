@@ -1,0 +1,33 @@
+@model Web.Models.AlunoFormViewModel
+
+@{
+    ViewData["Title"] = "Cadastrar Aluno";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<form asp-controller="Aluno" asp-action="CriarAlunoInsert" method="post">
+    <label>Nome</label>
+    <input type="text" asp-for="Nome">
+    <label>Data de nascimento</label>
+    <input type="date" asp-for="DataNascimento">
+    <label>Cpf</label>
+    <input type="text" asp-for="Cpf">
+    <label>Cidade</label>
+    <select asp-for="CidadeId">
+        <option value="1">São Paulo</option>
+    </select>
+    <label>Sexo</label>
+    <select asp-for="Sexo">
+        <option value="0">Masculino</option>
+        <option value="1">Feminino</option>
+    </select>
+    <button type="submit">Criar Aluno</button>
+</form>
+</body>
+</html>

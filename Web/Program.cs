@@ -4,7 +4,8 @@ using Infrastructure.DAO;
 
 var builder = WebApplication.CreateBuilder(args);
 var fb = builder.Configuration.GetSection("Firebird");
-var dbPath = Path.Combine(AppContext.BaseDirectory, "Database", "GestaoEscolar.fdb");
+var dbPath = Path.GetFullPath(
+    Path.Combine(builder.Environment.ContentRootPath, "..", "Database", "GestaoEscolar.fdb"));
 var connectionString =
     $"User={fb["User"]};Password={fb["Password"]};Database={dbPath};DataSource={fb["DataSource"]};Port={fb["Port"]};Dialect=3;Charset=UTF8;";
 
@@ -12,6 +13,8 @@ var connectionString =
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAlunoRepository>(_ => new AlunoDAO(connectionString));
 builder.Services.AddScoped<AlunoService>();
+builder.Services.AddScoped<ICidadeRepository>(_ => new CidadeDAO(connectionString));
+builder.Services.AddScoped<CidadeService>();
 
 var app = builder.Build();
 

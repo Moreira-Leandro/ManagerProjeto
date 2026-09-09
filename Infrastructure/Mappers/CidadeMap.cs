@@ -12,10 +12,7 @@ public class CidadeMap
         return new Cidade(
             nomeCidade: reader.GetString(reader.GetOrdinal("NOME")),
             ufCidade: (UFCidade)reader.GetInt32(reader.GetOrdinal("UF"))
-        )
-        {
-            IdCidade = reader.GetInt32(reader.GetOrdinal("ID"))
-        };
+        );
     }
     
 }

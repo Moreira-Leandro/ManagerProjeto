@@ -1,0 +1,26 @@
+@model Web.Models.CidadeFormViewModel
+
+@{
+    ViewData["Title"] = "Cadastrar Cidade";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <form asp-controller="Cidade" asp-action="CriarCidadeInsert" method="post">
+        <label>Nome</label>
+        <input type="text" asp-for="NomeCidade">
+        <label>UF</label>
+        <select asp-for="UfCidade">
+            <option value="SP">SP</option>
+        </select>
+        <button type="submit">Criar Cidade</button>
+    </form>
+</div>
+</body>
+</html>

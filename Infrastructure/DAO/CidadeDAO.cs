@@ -15,7 +15,7 @@ public class CidadeDAO : ICidadeRepository
         this._connectionString = connect;
     }
     
-    public async Task CreateLab(Cidade cidade)
+    public async Task CreateCidade(Cidade cidade)
     {
         string query = 
             @"INSERT INTO CIDADE (NOME, UF) 
@@ -31,7 +31,7 @@ public class CidadeDAO : ICidadeRepository
         await cmd.ExecuteNonQueryAsync();
     }
 
-    public async Task DeleteLab(int idCidade)
+    public async Task DeleteCidade(int idCidade)
     {
         string query =
             @"DELETE FROM CIDADE WHERE ID=@ID;";
@@ -45,7 +45,7 @@ public class CidadeDAO : ICidadeRepository
         await cmd.ExecuteNonQueryAsync();
     }
 
-    public async Task UpdateLab(Cidade cidade)
+    public async Task UpdateCidade(Cidade cidade)
     {
         string query =
             @"UPDATE CIDADE SET NOME=@NOME, UF=@UF WHERE ID=@ID_CIDADE;";

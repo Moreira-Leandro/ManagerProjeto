@@ -5,7 +5,7 @@ namespace Domain.Models;
 public class Cidade
 {
     
-    public int IdCidade { get; set; }
+    public int IdCidade { get; }
     public string NomeCidade { get; set; }
     public UFCidade UfCidade { get; set; }
 

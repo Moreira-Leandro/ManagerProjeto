@@ -85,15 +85,6 @@ dotnet run --project Web
 
 A aplicação sobe em `http://localhost:5211` (ou `https://localhost:7213`).
 
-## Convenções de versionamento
-
-- Commits seguem o padrão [Conventional Commits](https://www.conventionalcommits.org/pt-br/):
-  `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`
-- Desenvolvimento em branches por funcionalidade (`feat/nome-da-feature`), integradas
-  na `main` via Pull Request
-- Artefatos de build (`bin/`, `obj/`), configuração local e o arquivo de banco
-  (`*.fdb`) não são versionados
-
 ## Autor
 
 Desenvolvido como projeto para praticas em desenvolvimento.

@@ -20,11 +20,14 @@ public class Aluno
         this.CidadeIdAluno = cidadeIdAluno;
         this.SexoAluno = sexoAluno;
     }
-    
+
     public Aluno(int idAluno, string nomeAluno, DateOnly dataNascimentoAluno, string? cpfAluno, int cidadeIdAluno, Sexo sexoAluno)
-        : this(nomeAluno, dataNascimentoAluno, cpfAluno, cidadeIdAluno, sexoAluno)
     {
-        IdAluno = idAluno;
+        this.NomeAluno = nomeAluno;
+        this.DataNascimentoAluno = dataNascimentoAluno;
+        this.CpfAluno = cpfAluno;
+        this.CidadeIdAluno = cidadeIdAluno;
+        this.SexoAluno = sexoAluno;
     }
     
 }

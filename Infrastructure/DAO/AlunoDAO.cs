@@ -74,7 +74,7 @@ public class AlunoDAO : IAlunoRepository
     public async Task<Aluno?> FindById(int idAluno)
     {
         string query =
-            @"SELECT ID, NOME, DATA_NASCIMENTO, CPF, NOME_RESPONSAVEL, TELEFONE, EMAIL, CIDADE_ID, ATIVO, DATA_CADASTRO 
+            @"SELECT ID, NOME, DATA_NASCIMENTO, CPF, CIDADE_ID, SEXO
                 FROM ALUNO WHERE ID=@ID";
         
         using var conexão = new FbConnection(_connectionString);
@@ -98,7 +98,7 @@ public class AlunoDAO : IAlunoRepository
         List<Aluno> alunos = new List<Aluno>();
         
         string query =
-            @"SELECT ID, NOME, DATA_NASCIMENTO, CPF, NOME_RESPONSAVEL, TELEFONE, EMAIL, CIDADE_ID, ATIVO, DATA_CADASTRO FROM ALUNO";
+            @"SELECT ID, NOME, DATA_NASCIMENTO, CPF, CIDADE_ID, SEXO FROM ALUNO";
         
         using var conexão = new FbConnection(_connectionString);
         await conexão.OpenAsync();

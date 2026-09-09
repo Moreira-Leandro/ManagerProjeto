@@ -15,4 +15,11 @@ public class Cidade
         this.UfCidade = ufCidade;
     }
     
+    public Cidade(int idCidade, string nomeCidade, UFCidade ufCidade)
+    {
+        this.IdCidade = idCidade;
+        this.NomeCidade = nomeCidade;
+        this.UfCidade = ufCidade;
+    }
+    
 }

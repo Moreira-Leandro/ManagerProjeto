@@ -11,11 +11,12 @@
     <title></title>
 </head>
 <body>
-<form asp-controller="Aluno" asp-action="CriarAlunoInsert" method="post">
+<form asp-controller="Aluno" asp-action="SalvarAluno" method="post">
+    <input type="hidden" asp-for="IdAluno"/>
     <label>Nome</label>
     <input type="text" asp-for="Nome">
     <label>Data de nascimento</label>
-    <input type="date" asp-for="DataNascimento">
+    <input type="date" asp-for="DataNascimento" value="@DateTime.Now.ToString("yyyy-MM-dd")">
     <label>Cpf</label>
     <input type="text" asp-for="Cpf">
     <label>Cidade</label>

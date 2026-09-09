@@ -12,7 +12,8 @@
 </head>
 <body>
 <div>
-    <form asp-controller="Cidade" asp-action="CriarCidadeInsert" method="post">
+    <form asp-controller="Cidade" asp-action="SalvarCidade" method="post">
+        <input type="hidden" asp-for="IdCidade"/>
         <label>Nome</label>
         <input type="text" asp-for="NomeCidade">
         <label>UF</label>

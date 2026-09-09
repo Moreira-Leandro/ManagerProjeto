@@ -33,4 +33,9 @@ public class CidadeService
         return await _repository.FindAll();
     }
 
+    public async Task AtualizarCidade(Cidade cidade)
+    {
+        await _repository.UpdateCidade(cidade);
+    }
+
 }

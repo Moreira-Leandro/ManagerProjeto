@@ -1,3 +1,5 @@
+@model IEnumerable<Domain.Models.Aluno>
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -11,6 +13,42 @@
 <body>
 <div>
     <a asp-controller="Aluno" asp-action="CriarAluno">Criar aluno</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Matricula</th>
+                <th>Nome</th>
+                <th>Data de nascimento</th>
+                <th>CPF</th>
+                <th>Cidade</th>
+                <th>Sexo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var aluno in Model)
+            {
+                <tr>
+                    <td>@aluno.IdAluno</td>
+                    <td>@aluno.NomeAluno</td>
+                    <td>@aluno.DataNascimentoAluno.ToString("dd/MM/yyyy")</td>
+                    <td>@aluno.CpfAluno</td>
+                    <td>@aluno.CidadeIdAluno</td>
+                    <td>@aluno.SexoAluno</td>
+                    <td>
+                        <form asp-controller="Aluno" asp-action="DeletarAluno" method="post" style="display:inline"
+                              onsubmit="return confirm('Apagar este aluno?');">
+                            <input type="hidden" name="idAluno" value="@aluno.IdAluno" />
+                            <button type="submit">Apagar</button>
+                        </form>
+                    </td>
+                    <td>
+                        <a asp-controller="Aluno" asp-action="CriarAluno" asp-route-id="@aluno.IdAluno">Editar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

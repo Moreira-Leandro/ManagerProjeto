@@ -3,7 +3,7 @@ using Domain.Models;
 
 namespace Application.Service;
 
-public class AlunoService 
+public class AlunoService
 {
 
     private readonly IAlunoRepository _repository;
@@ -32,5 +32,10 @@ public class AlunoService
     {
         return await _repository.FindAll();
     }
-    
+
+    public async Task AtualizarAluno(Aluno aluno)
+    {
+        await _repository.UpdateAluno(aluno);
+    }
+
 }

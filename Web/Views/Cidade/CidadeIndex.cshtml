@@ -1,5 +1,7 @@
+@model IEnumerable<Domain.Models.Cidade>
+
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Cidades";
 }
 
 <!DOCTYPE html>
@@ -11,6 +13,35 @@
 <body>
 <div>
     <a asp-controller="Cidade" asp-action="CriarCidade">Criar Cidade</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>UF</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cidade in Model)
+            {
+                <tr>
+                    <td>@cidade.IdCidade</td>
+                    <td>@cidade.NomeCidade</td>
+                    <td>@cidade.UfCidade</td>
+                    <td>
+                        <form asp-controller="Cidade" asp-action="DeletarCidade" method="post" style="display:inline" onsubmit="return confirm('Deseja apagar?');">
+                            <input type="hidden" name="idCidade" value="@cidade.IdCidade"/>
+                            <button type="submit">Apagar</button>
+                        </form>
+                    </td>
+                    <td>
+                        <a asp-controller="Cidade" asp-action="CriarCidade" asp-route-id="@cidade.IdCidade">Editar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

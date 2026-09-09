@@ -26,7 +26,7 @@ public class CidadeDAO : ICidadeRepository
 
         using var cmd = new FbCommand(query, conexão);
         cmd.Parameters.AddWithValue("@NOME", cidade.NomeCidade);
-        cmd.Parameters.AddWithValue("@UF", cidade.UfCidade);
+        cmd.Parameters.AddWithValue("@UF", cidade.UfCidade.ToString());
 
         await cmd.ExecuteNonQueryAsync();
     }
@@ -56,7 +56,7 @@ public class CidadeDAO : ICidadeRepository
         using var cmd = new FbCommand(query, conexão);
         cmd.Parameters.AddWithValue("@ID_CIDADE", cidade.IdCidade);
         cmd.Parameters.AddWithValue("@NOME", cidade.NomeCidade);
-        cmd.Parameters.AddWithValue("@UF", cidade.UfCidade);
+        cmd.Parameters.AddWithValue("@UF", cidade.UfCidade.ToString());
 
         await cmd.ExecuteNonQueryAsync();
     }

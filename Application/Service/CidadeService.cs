@@ -1,4 +1,4 @@
-using Application.Interfaces;
+using Domain.Interfaces;
 using Domain.Models;
 
 namespace Application.Service;
@@ -6,36 +6,36 @@ namespace Application.Service;
 public class CidadeService
 {
 
-    private readonly ICidadeRepository _repository;
+    private readonly ICidadeRepositorio _repositorio;
 
-    public CidadeService(ICidadeRepository repository)
+    public CidadeService(ICidadeRepositorio repositorio)
     {
-        this._repository = repository;
+        this._repositorio = repositorio;
     }
 
-    public async Task CriarCidade(Cidade cidade)
+    public async Task Crie(Cidade cidade)
     {
-        await _repository.CreateCidade(cidade);
+        await _repositorio.Crie(cidade);
     }
 
-    public async Task DeletarCidade(int idCidade)
+    public async Task Delete(int idCidade)
     {
-        await _repository.DeleteCidade(idCidade);
+        await _repositorio.Delete(idCidade);
     }
 
-    public async Task<Cidade?> BuscarCidade(int idCidade)
+    public async Task<Cidade?> BusquePorId(int idCidade)
     {
-        return await _repository.FindById(idCidade);
+        return await _repositorio.BusquePorId(idCidade);
     }
 
-    public async Task<List<Cidade>> BuscarCidades()
+    public async Task<List<Cidade>> BusqueTodos()
     {
-        return await _repository.FindAll();
+        return await _repositorio.BusqueTodos();
     }
 
-    public async Task AtualizarCidade(Cidade cidade)
+    public async Task Atualize(Cidade cidade)
     {
-        await _repository.UpdateCidade(cidade);
+        await _repositorio.Atualize(cidade);
     }
 
 }

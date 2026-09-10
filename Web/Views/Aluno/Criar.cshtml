@@ -1,17 +1,12 @@
+@using Domain.Models
 @model Web.Models.AlunoFormViewModel
 
 @{
     ViewData["Title"] = "Cadastrar Aluno";
+    List<Cidade> cidades = (List<Cidade>)ViewBag.Cidades;
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<form asp-controller="Aluno" asp-action="SalvarAluno" method="post">
+<form asp-controller="Aluno" asp-action="@(Model.IdAluno == 0 ? "Criar" : "Editar")" method="post">
     <input type="hidden" asp-for="IdAluno"/>
     <label>Nome</label>
     <input type="text" asp-for="Nome">
@@ -21,14 +16,16 @@
     <input type="text" asp-for="Cpf">
     <label>Cidade</label>
     <select asp-for="CidadeId">
-        <option value="1">São Paulo</option>
+        @foreach (Cidade cidade in cidades)
+        {
+            <option value="@cidade.Id">@cidade.Nome</option>
+        }
     </select>
     <label>Sexo</label>
     <select asp-for="Sexo">
         <option value="0">Masculino</option>
         <option value="1">Feminino</option>
+        <option value="2">Outros</option>
     </select>
     <button type="submit">Criar Aluno</button>
 </form>
-</body>
-</html>

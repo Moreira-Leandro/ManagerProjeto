@@ -4,30 +4,21 @@ namespace Domain.Models;
 
 public class Aluno
 {
+    public int Matricula { get; }
+    public string Nome { get; private set; }
+    public DateOnly DataNascimento { get; private set; }
+    public string? Cpf { get; private set; }
+    public int CidadeId { get; private set; }
+    public Sexo Sexo { get; private set; }
 
-    public int IdAluno { get; }
-    public string NomeAluno { get; private set; }
-    public DateOnly DataNascimentoAluno { get; private set; }
-    public string? CpfAluno { get; private set; }
-    public int CidadeIdAluno { get; private set; }
-    public Sexo SexoAluno { get; private set; }
-
-    public Aluno(string nomeAluno, DateOnly dataNascimentoAluno, string? cpfAluno, int cidadeIdAluno, Sexo sexoAluno)
+    public Aluno(int matricula, string nome, DateOnly dataNascimento, string? cpf, int cidadeId, Sexo sexo)
     {
-        this.NomeAluno = nomeAluno;
-        this.DataNascimentoAluno = dataNascimentoAluno;
-        this.CpfAluno = cpfAluno;
-        this.CidadeIdAluno = cidadeIdAluno;
-        this.SexoAluno = sexoAluno;
+        this.Matricula = matricula;
+        this.Nome = nome;
+        this.DataNascimento = dataNascimento;
+        this.Cpf = cpf;
+        this.CidadeId = cidadeId;
+        this.Sexo = sexo;
     }
 
-    public Aluno(int idAluno, string nomeAluno, DateOnly dataNascimentoAluno, string? cpfAluno, int cidadeIdAluno, Sexo sexoAluno)
-    {
-        this.NomeAluno = nomeAluno;
-        this.DataNascimentoAluno = dataNascimentoAluno;
-        this.CpfAluno = cpfAluno;
-        this.CidadeIdAluno = cidadeIdAluno;
-        this.SexoAluno = sexoAluno;
-    }
-    
 }

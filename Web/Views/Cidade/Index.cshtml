@@ -1,0 +1,46 @@
+@using Domain.Models
+@model IEnumerable<Domain.Models.Cidade>
+
+@{
+    ViewData["Title"] = "Cidades";
+}
+
+@if (TempData["Erro"] != null)
+{
+    <p style="color:red">@TempData["Erro"]</p>
+}
+
+<div>
+    <a asp-controller="Cidade" asp-action="Criar">Criar Cidade</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>UF</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Cidade cidade in Model)
+            {
+                <tr>
+                    <td>@cidade.Id</td>
+                    <td>@cidade.Nome</td>
+                    <td>@cidade.Uf</td>
+                    <td>
+                        <form asp-controller="Cidade" asp-action="Deletar" method="post" style="display:inline" onsubmit="return confirm('Deseja apagar?');">
+                            <input type="hidden" name="idCidade" value="@cidade.Id"/>
+                            <button type="submit">Apagar</button>
+                        </form>
+                    </td>
+                    <td>
+                        <a asp-controller="Cidade" asp-action="Editar" asp-route-idCidade="@cidade.Id">Editar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -10,12 +10,12 @@ public class CidadeMap
     public static Cidade Map(IDataRecord reader)
     {
         
-        var uf = reader.GetString(reader.GetOrdinal("UF"));
+        string uf = reader.GetString(reader.GetOrdinal("UF"));
         
         return new Cidade(
-            idCidade: reader.GetInt32(reader.GetOrdinal("ID")),
-            nomeCidade: reader.GetString(reader.GetOrdinal("NOME")),
-            ufCidade: Enum.Parse<UFCidade>(uf)
+            id: reader.GetInt32(reader.GetOrdinal("ID")),
+            nome: reader.GetString(reader.GetOrdinal("NOME")),
+            uf: Enum.Parse<UFCidade>(uf)
         );
     }
     

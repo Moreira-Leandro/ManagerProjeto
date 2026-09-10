@@ -1,12 +1,12 @@
-using Application.Interfaces;
 using Domain.Enum;
+using Domain.Interfaces;
 using Domain.Models;
 using FirebirdSql.Data.FirebirdClient;
 using Infrastructure.Mappers;
 
 namespace Infrastructure.DAO;
 
-public class AlunoDAO : IAlunoRepository
+public class AlunoDAO : IAlunoRepositorio
 {
 
     private readonly string _connectionString;
@@ -16,98 +16,98 @@ public class AlunoDAO : IAlunoRepository
         this._connectionString = connect;
     }
     
-    public async Task CreateAluno(Aluno aluno)
+    public async Task Crie(Aluno aluno)
     {
         string query = 
             @"INSERT INTO ALUNO (NOME, DATA_NASCIMENTO, CPF, CIDADE_ID, SEXO) 
             VALUES(@NOME, @DATA_NASCIMENTO, @CPF, @CIDADE_ID, @SEXO)";
 
-        using var conexão = new FbConnection(_connectionString);
-        await conexão.OpenAsync();
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
 
-        using var cmd = new FbCommand(query, conexão);
-        cmd.Parameters.AddWithValue("@NOME", aluno.NomeAluno);
-        cmd.Parameters.AddWithValue("@DATA_NASCIMENTO", aluno.DataNascimentoAluno);
-        cmd.Parameters.AddWithValue("@CPF", aluno.CpfAluno);
-        cmd.Parameters.AddWithValue("@CIDADE_ID", aluno.CidadeIdAluno);
-        cmd.Parameters.AddWithValue("@SEXO", aluno.SexoAluno);
+        using FbCommand comando = new FbCommand(query, conexao);
+        comando.Parameters.AddWithValue("@NOME", aluno.Nome);
+        comando.Parameters.AddWithValue("@DATA_NASCIMENTO", aluno.DataNascimento);
+        comando.Parameters.AddWithValue("@CPF", (object?)aluno.Cpf ?? DBNull.Value);
+        comando.Parameters.AddWithValue("@CIDADE_ID", aluno.CidadeId);
+        comando.Parameters.AddWithValue("@SEXO", aluno.Sexo);
 
-        await cmd.ExecuteNonQueryAsync();
+        await comando.ExecuteNonQueryAsync();
     }
 
-    public async Task DeleteAluno(int idAluno)
+    public async Task Delete(int matriculaAluno)
     {
         string query =
-            @"DELETE FROM ALUNO WHERE ID=@ID;";
+            @"DELETE FROM ALUNO WHERE MATRICULA=@MATRICULA;";
         
-        using var conexão = new FbConnection(_connectionString);
-        await conexão.OpenAsync();
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
 
-        using var cmd = new FbCommand(query, conexão);
-        cmd.Parameters.AddWithValue("@ID", idAluno);
+        using FbCommand comando = new FbCommand(query, conexao);
+        comando.Parameters.AddWithValue("@MATRICULA", matriculaAluno);
 
-        await cmd.ExecuteNonQueryAsync();
+        await comando.ExecuteNonQueryAsync();
 
     }
 
-    public async Task UpdateAluno(Aluno aluno)
+    public async Task Atualize(Aluno aluno)
     {
 
         string query =
             @"UPDATE ALUNO SET NOME=@NOME, DATA_NASCIMENTO=@DATA_NASCIMENTO, CPF=@CPF, CIDADE_ID=@CIDADE_ID, SEXO=@SEXO 
-             WHERE ID=@ID_ALUNO;";
+             WHERE MATRICULA=@MATRICULA;";
         
-        using var conexão = new FbConnection(_connectionString);
-        await conexão.OpenAsync();
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
 
-        using var cmd = new FbCommand(query, conexão);
-        cmd.Parameters.AddWithValue("@ID_ALUNO", aluno.IdAluno);
-        cmd.Parameters.AddWithValue("@NOME", aluno.NomeAluno);
-        cmd.Parameters.AddWithValue("@DATA_NASCIMENTO", aluno.DataNascimentoAluno);
-        cmd.Parameters.AddWithValue("@CPF", aluno.CpfAluno);
-        cmd.Parameters.AddWithValue("@CIDADE_ID", aluno.CidadeIdAluno);
-        cmd.Parameters.AddWithValue("@SEXO", aluno.SexoAluno);
+        using FbCommand comando = new FbCommand(query, conexao);
+        comando.Parameters.AddWithValue("@MATRICULA", aluno.Matricula);
+        comando.Parameters.AddWithValue("@NOME", aluno.Nome);
+        comando.Parameters.AddWithValue("@DATA_NASCIMENTO", aluno.DataNascimento);
+        comando.Parameters.AddWithValue("@CPF", (object?)aluno.Cpf ?? DBNull.Value);
+        comando.Parameters.AddWithValue("@CIDADE_ID", aluno.CidadeId);
+        comando.Parameters.AddWithValue("@SEXO", aluno.Sexo);
 
-        await cmd.ExecuteNonQueryAsync();
+        await comando.ExecuteNonQueryAsync();
     }
 
-    public async Task<Aluno?> FindById(int idAluno)
+    public async Task<Aluno?> BusquePorId(int matriculaAluno)
     {
         string query =
-            @"SELECT ID, NOME, DATA_NASCIMENTO, CPF, CIDADE_ID, SEXO
-                FROM ALUNO WHERE ID=@ID";
+            @"SELECT MATRICULA, NOME, DATA_NASCIMENTO, CPF, CIDADE_ID, SEXO
+                FROM ALUNO WHERE MATRICULA=@MATRICULA";
         
-        using var conexão = new FbConnection(_connectionString);
-        await conexão.OpenAsync();
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
 
-        using var cmd = new FbCommand(query, conexão);
-        cmd.Parameters.AddWithValue("@ID", idAluno);
+        using FbCommand comando = new FbCommand(query, conexao);
+        comando.Parameters.AddWithValue("@MATRICULA", matriculaAluno);
 
-        using var reader = await cmd.ExecuteReaderAsync();
+        using FbDataReader reader = await comando.ExecuteReaderAsync();
 
-        if (!reader.Read())
+        if (!await reader.ReadAsync())
             return null;
         
         return AlunoMap.Map(reader);
 
     }
 
-    public async Task<List<Aluno>> FindAll()
+    public async Task<List<Aluno>> BusqueTodos()
     {
 
         List<Aluno> alunos = new List<Aluno>();
         
         string query =
-            @"SELECT ID, NOME, DATA_NASCIMENTO, CPF, CIDADE_ID, SEXO FROM ALUNO";
+            @"SELECT MATRICULA, NOME, DATA_NASCIMENTO, CPF, CIDADE_ID, SEXO FROM ALUNO";
         
-        using var conexão = new FbConnection(_connectionString);
-        await conexão.OpenAsync();
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
         
-        using var cmd = new FbCommand(query, conexão);
-        using var reader = await cmd.ExecuteReaderAsync();
+        using FbCommand comando = new FbCommand(query, conexao);
+        using FbDataReader reader = await comando.ExecuteReaderAsync();
 
 
-        while (reader.Read())
+        while (await reader.ReadAsync())
         {
              alunos.Add(AlunoMap.Map(reader));
         }

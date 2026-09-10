@@ -1,22 +1,22 @@
-using Application.Interfaces;
 using Application.Service;
+using Domain.Interfaces;
 using Infrastructure.DAO;
 
-var builder = WebApplication.CreateBuilder(args);
-var fb = builder.Configuration.GetSection("Firebird");
-var dbPath = Path.GetFullPath(
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+IConfigurationSection firebird = builder.Configuration.GetSection("Firebird");
+string dbPath = Path.GetFullPath(
     Path.Combine(builder.Environment.ContentRootPath, "..", "Database", "GestaoEscolar.fdb"));
-var connectionString =
-    $"User={fb["User"]};Password={fb["Password"]};Database={dbPath};DataSource={fb["DataSource"]};Port={fb["Port"]};Dialect=3;Charset=UTF8;";
+string connectionString =
+    $"User={firebird["User"]};Password={firebird["Password"]};Database={dbPath};DataSource={firebird["DataSource"]};Port={firebird["Port"]};Dialect=3;Charset=UTF8;";
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IAlunoRepository>(_ => new AlunoDAO(connectionString));
+builder.Services.AddScoped<IAlunoRepositorio>(_ => new AlunoDAO(connectionString));
 builder.Services.AddScoped<AlunoService>();
-builder.Services.AddScoped<ICidadeRepository>(_ => new CidadeDAO(connectionString));
+builder.Services.AddScoped<ICidadeRepositorio>(_ => new CidadeDAO(connectionString));
 builder.Services.AddScoped<CidadeService>();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

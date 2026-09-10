@@ -1,11 +1,11 @@
-using Application.Interfaces;
+using Domain.Interfaces;
 using Domain.Models;
 using FirebirdSql.Data.FirebirdClient;
 using Infrastructure.Mappers;
 
 namespace Infrastructure.DAO;
 
-public class CidadeDAO : ICidadeRepository
+public class CidadeDAO : ICidadeRepositorio
 {
 
     private readonly string _connectionString;
@@ -15,86 +15,86 @@ public class CidadeDAO : ICidadeRepository
         this._connectionString = connect;
     }
     
-    public async Task CreateCidade(Cidade cidade)
+    public async Task Crie(Cidade cidade)
     {
         string query = 
             @"INSERT INTO CIDADE (NOME, UF) 
               VALUES(@NOME, @UF);";
 
-        using var conexão = new FbConnection(_connectionString);
-        await conexão.OpenAsync();
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
 
-        using var cmd = new FbCommand(query, conexão);
-        cmd.Parameters.AddWithValue("@NOME", cidade.NomeCidade);
-        cmd.Parameters.AddWithValue("@UF", cidade.UfCidade.ToString());
+        using FbCommand comando = new FbCommand(query, conexao);
+        comando.Parameters.AddWithValue("@NOME", cidade.Nome);
+        comando.Parameters.AddWithValue("@UF", cidade.Uf);
 
-        await cmd.ExecuteNonQueryAsync();
+        await comando.ExecuteNonQueryAsync();
     }
 
-    public async Task DeleteCidade(int idCidade)
+    public async Task Delete(int idCidade)
     {
         string query =
             @"DELETE FROM CIDADE WHERE ID=@ID;";
         
-        using var conexão = new FbConnection(_connectionString);
-        await conexão.OpenAsync();
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
 
-        using var cmd = new FbCommand(query, conexão);
-        cmd.Parameters.AddWithValue("@ID", idCidade);
+        using FbCommand comando = new FbCommand(query, conexao);
+        comando.Parameters.AddWithValue("@ID", idCidade);
 
-        await cmd.ExecuteNonQueryAsync();
+        await comando.ExecuteNonQueryAsync();
     }
 
-    public async Task UpdateCidade(Cidade cidade)
+    public async Task Atualize(Cidade cidade)
     {
         string query =
             @"UPDATE CIDADE SET NOME=@NOME, UF=@UF WHERE ID=@ID_CIDADE;";
         
-        using var conexão = new FbConnection(_connectionString);
-        await conexão.OpenAsync();
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
 
-        using var cmd = new FbCommand(query, conexão);
-        cmd.Parameters.AddWithValue("@ID_CIDADE", cidade.IdCidade);
-        cmd.Parameters.AddWithValue("@NOME", cidade.NomeCidade);
-        cmd.Parameters.AddWithValue("@UF", cidade.UfCidade.ToString());
+        using FbCommand comando = new FbCommand(query, conexao);
+        comando.Parameters.AddWithValue("@ID_CIDADE", cidade.Id);
+        comando.Parameters.AddWithValue("@NOME", cidade.Nome);
+        comando.Parameters.AddWithValue("@UF", cidade.Uf);
 
-        await cmd.ExecuteNonQueryAsync();
+        await comando.ExecuteNonQueryAsync();
     }
 
-    public async Task<Cidade?> FindById(int idCidade)
+    public async Task<Cidade?> BusquePorId(int idCidade)
     {
         string query =
             @"SELECT ID, NOME, UF FROM CIDADE WHERE ID=@ID";
         
-        using var conexão = new FbConnection(_connectionString);
-        await conexão.OpenAsync();
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
 
-        using var cmd = new FbCommand(query, conexão);
-        cmd.Parameters.AddWithValue("@ID", idCidade);
+        using FbCommand comando = new FbCommand(query, conexao);
+        comando.Parameters.AddWithValue("@ID", idCidade);
 
-        using var reader = await cmd.ExecuteReaderAsync();
+        using FbDataReader reader = await comando.ExecuteReaderAsync();
 
-        if (!reader.Read())
+        if (!await reader.ReadAsync())
             return null;
         
         return CidadeMap.Map(reader);
     }
 
-    public async Task<List<Cidade>> FindAll()
+    public async Task<List<Cidade>> BusqueTodos()
     {
         List<Cidade> cidades = new List<Cidade>();
         
         string query =
             @"SELECT ID, NOME, UF FROM CIDADE ";
         
-        using var conexão = new FbConnection(_connectionString);
-        await conexão.OpenAsync();
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
         
-        using var cmd = new FbCommand(query, conexão);
-        using var reader = await cmd.ExecuteReaderAsync();
+        using FbCommand comando = new FbCommand(query, conexao);
+        using FbDataReader reader = await comando.ExecuteReaderAsync();
 
 
-        while (reader.Read())
+        while (await reader.ReadAsync())
         {
             cidades.Add(CidadeMap.Map(reader));
         }

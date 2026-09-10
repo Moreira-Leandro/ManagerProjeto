@@ -1,27 +1,23 @@
+@using Domain.Enum
+@using Domain.Models
 @model Web.Models.CidadeFormViewModel
 
 @{
     ViewData["Title"] = "Cadastrar Cidade";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title></title>
-</head>
-<body>
 <div>
-    <form asp-controller="Cidade" asp-action="SalvarCidade" method="post">
+    <form asp-controller="Cidade" asp-action="@(Model.IdCidade == 0 ? "Criar" : "Editar")" method="post">
         <input type="hidden" asp-for="IdCidade"/>
         <label>Nome</label>
         <input type="text" asp-for="NomeCidade">
         <label>UF</label>
         <select asp-for="UfCidade">
-            <option value="SP">SP</option>
+            @foreach (UFCidade uf in Enum.GetValues<UFCidade>())
+            {
+                <option value="@uf">@uf</option>
+            }
         </select>
         <button type="submit">Criar Cidade</button>
     </form>
 </div>
-</body>
-</html>

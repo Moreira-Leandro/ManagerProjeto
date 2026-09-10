@@ -2,8 +2,8 @@ namespace Domain.Enum;
 
 public enum Sexo
 {
-    masculino = 0,
-    feminino = 1,
-    outros = 2
+    Masculino = 0,
+    Feminino = 1,
+    Outros = 2
     
 }

@@ -1,4 +1,4 @@
-using Application.Interfaces;
+using Domain.Interfaces;
 using Domain.Models;
 
 namespace Application.Service;
@@ -6,36 +6,36 @@ namespace Application.Service;
 public class AlunoService
 {
 
-    private readonly IAlunoRepository _repository;
+    private readonly IAlunoRepositorio _repositorio;
 
-    public AlunoService(IAlunoRepository repository)
+    public AlunoService(IAlunoRepositorio repositorio)
     {
-        this._repository = repository;
+        this._repositorio = repositorio;
     }
 
-    public async Task CriarAluno(Aluno aluno)
+    public async Task Crie(Aluno aluno)
     {
-        await _repository.CreateAluno(aluno);
+        await _repositorio.Crie(aluno);
     }
 
-    public async Task DeletarAluno(int idAluno)
+    public async Task Delete(int idAluno)
     {
-        await _repository.DeleteAluno(idAluno);
+        await _repositorio.Delete(idAluno);
     }
 
-    public async Task<Aluno?> BuscarAluno(int idAluno)
+    public async Task<Aluno?> BusquePorId(int idAluno)
     {
-        return await _repository.FindById(idAluno);
+        return await _repositorio.BusquePorId(idAluno);
     }
 
-    public async Task<List<Aluno>> BuscarAlunos()
+    public async Task<List<Aluno>> BusqueTodos()
     {
-        return await _repository.FindAll();
+        return await _repositorio.BusqueTodos();
     }
 
-    public async Task AtualizarAluno(Aluno aluno)
+    public async Task Atualize(Aluno aluno)
     {
-        await _repository.UpdateAluno(aluno);
+        await _repositorio.Atualize(aluno);
     }
 
 }

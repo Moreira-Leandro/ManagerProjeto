@@ -15,6 +15,16 @@ public class AlunoService
 
     public async Task Crie(Aluno aluno)
     {
+
+        if (aluno.Nome == null)
+            throw new ArgumentException("Insira o nome do aluno");
+        
+        if (aluno.DataNascimento > DateOnly.FromDateTime(DateTime.Today))
+            throw new ArgumentException("A data de nascimento não pode ser acima do dia de hoje");
+
+        if (aluno.Cpf != null && await _repositorio.ExisteCPF(aluno.Cpf))
+            throw new ArgumentException("CPF já existente");
+        
         await _repositorio.Crie(aluno);
     }
 

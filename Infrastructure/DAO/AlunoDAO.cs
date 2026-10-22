@@ -114,4 +114,19 @@ public class AlunoDAO : IAlunoRepositorio
 
         return alunos;
     }
+
+    public async Task<bool> ExisteCPF(string cpf)
+    {
+        string query =
+            @"SELECT COUNT(*) FROM ALUNO WHERE CPF = @CPF";
+
+        using FbConnection conexao = new FbConnection(_connectionString);
+        await conexao.OpenAsync();
+
+        using FbCommand comando = new FbCommand(query, conexao);
+        comando.Parameters.AddWithValue("@CPF", cpf);
+
+        object? resultado = await comando.ExecuteScalarAsync();
+        return Convert.ToInt32(resultado) > 0;
+    }
 }

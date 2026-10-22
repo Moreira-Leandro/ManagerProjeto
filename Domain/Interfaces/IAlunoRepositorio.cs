@@ -10,5 +10,6 @@ public interface IAlunoRepositorio
     public Task Atualize(Aluno aluno);
     public Task<Aluno?> BusquePorId(int matriculaAluno);
     public Task<List<Aluno>> BusqueTodos();
-    
+    public Task<bool> ExisteCPF(string cpf);
+
 }

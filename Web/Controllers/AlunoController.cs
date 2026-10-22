@@ -34,11 +34,23 @@ public class AlunoController : Controller
     public async Task<IActionResult> Criar(AlunoFormViewModel model)
     {
 
+        ViewBag.Cidades = await _cidadeService.BusqueTodos();
+        
         if (!ModelState.IsValid)
             return View(model);
 
         Aluno aluno = new Aluno(model.IdAluno, model.Nome, model.DataNascimento, model.Cpf, model.CidadeId, model.Sexo);
-        await _alunoService.Crie(aluno);
+
+        try
+        {
+            await _alunoService.Crie(aluno);
+        }
+        catch (ArgumentException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(model);
+        }
+        
         
         return RedirectToAction(nameof(Index));
 
